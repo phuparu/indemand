@@ -6,7 +6,7 @@ export default {
   ],
   theme: {
       extend: {colors: {
-        primaryColor: "F0A500",
+        primaryColor: "#F0A500",
         brownColor: "#C08B5C",
         orangeColor: "#E45826",
         beigeBlueColor: "#E6D5B8",
