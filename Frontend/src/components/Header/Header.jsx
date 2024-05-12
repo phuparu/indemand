@@ -46,8 +46,8 @@ const Header = () => {
         <div className="container">
             <div className='flex items-center justify-between'>
                 {/* ----- LOGO -----*/}
-                <div>
-                    INDEMAND
+                <div className='text-[32px]'>
+                    I N D E M A N D
                 </div>
 
                 {/* ----- MENU -----*/}
@@ -55,8 +55,8 @@ const Header = () => {
                     <ul className='menu flex items-center gap-[4rem]'>
                         {
                             navLinks.map((link ,index)=><li key={index}>
-                                <NavLink to={link.path} className={navClass=> navClass.isActive ? 'text-primaryColor text-[16px] leading-7 font-[600]' : 
-                                'text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor'} >
+                                <NavLink to={link.path} className={navClass=> navClass.isActive ? 'text-primaryColor text-[20px] leading-7 font-[600]' : 
+                                'text-textColor text-[20px] leading-7 font-[500] hover:text-primaryColor'} >
                                     {link.display}</NavLink>
                             </li>)
                         }
@@ -73,7 +73,7 @@ const Header = () => {
                 </div>
                 
                 <Link to='/login'>
-                    <button className='bg-primaryColor py-2 px-6 text-white font-[600]
+                    <button className='bg-primaryColor py-2 px-6 text-white text-[20px] font-[600]
                     h-[44px] flex items-center justify-center rounded-[50px]'>Login</button>
                 </Link>
 

@@ -7,21 +7,21 @@ const Home = () => {
   return (
     <div>
       {/* -----Hero section------ */}
-    <section className='hero__section pt-[60px] 2xl:h-[800px]'>
+    <section className='hero__section pt-[40px] 2xl:h-[800px]'>
       <div className="container">
         <div className='flex flex-col lg:flex-row gap-[70px] items-center justify-between'>
           {/* ---- hero content ---- */}
           <div>
             <div className='lg:w-[570px]'>
-              <h1 className='text-[36px] leading-[46px] text-headingColor font-[800] md:text-[60]
-              md:leading-[70px]'>
+              <h1 className='text-[48px] leading-[46px] text-headingColor font-[600] md:text-[60]
+              md:leading-[70px] tracking-widest'>
                 INDEMAND Private Tutoring 
               </h1>
-              <p className='text__para'>
+              <p className='text__para tracking-wider'>
                 เว็บไซต์ที่ช่วยให้การจองเวลาเรียนเป็นเรื่องง่าย
               </p>
 
-              <button className='btn'>
+              <button className='btn text-[20px]'>
                 จองเวลาเลย
               </button>
             </div>
