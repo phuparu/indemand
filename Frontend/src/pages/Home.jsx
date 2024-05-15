@@ -5,12 +5,12 @@ import img3 from '../images/img3.jpg'
 import img4 from '../images/img4.jpg'
 import faq from '../images/faq.jpg'
 import CourseList from '../components/Courses/CourseList'
-import FaqList from '../../Faq/FaqList'
+import FaqList from '../components/Faq/FaqList'
 const Home = () => {
   return (
     <div>
       {/* -----Hero section------ */}
-      <section className='hero__section pt-[40px] 2xl:h-[800px]'>
+      <section className='hero__section pt-[0px] 2xl:h-[800px]'>
         <div className="container">
           <div className='flex flex-col lg:flex-row gap-[70px] items-center justify-between'>
             {/* ---- hero content ---- */}

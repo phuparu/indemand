@@ -9,7 +9,7 @@ export default {
         primaryColor: "#F0A500",
         brownColor: "#C08B5C",
         orangeColor: "#E45826",
-        beigeBlueColor: "#E6D5B8",
+        beigeColor: "#E6D5B8",
         headingColor: "#181A1E",
         textColor: "#4E545F",
       },

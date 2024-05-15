@@ -1,5 +1,5 @@
 import React from 'react'
-import { faqlist } from '../src/assets/data/faqlist'
+import { faqlist } from '../../assets/data/faqlist'
 import FaqItem from './FaqItem'
 const FaqList = () => {
   return (

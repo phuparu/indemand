@@ -30,7 +30,7 @@ const quickLink1 = [
   },
   {
     path:'/course',
-    display:'Booking',
+    display:'Courses',
   },
   {
     path:'/contact',
@@ -80,7 +80,7 @@ const Footer = () => {
 
           <div>
             <h2 className='text-[20px] leading-[30px] font-[700] mb-6 text-headingColor'>
-              Quick Links
+              Contents
             </h2>
 
             <ul>
