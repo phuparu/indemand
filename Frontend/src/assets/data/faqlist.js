@@ -21,7 +21,7 @@ export const faqlist = [
           "Lorem Ipsum",
       },
       {
-        question: "Lorem Ipsum",
+        question: "เปลี่ยนเวลาการจองได้ไหม?",
         content:
           "Lorem Ipsum",
       },
