@@ -10,7 +10,7 @@ const navLinks = [
     },
     {
         path:'/course',
-        display:"Course"
+        display:"Booking"
     },
     {
         path:'/contact',

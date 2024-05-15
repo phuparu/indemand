@@ -30,7 +30,7 @@ const quickLink1 = [
   },
   {
     path:'/course',
-    display:'Courses',
+    display:'Booking',
   },
   {
     path:'/contact',
