@@ -3,7 +3,9 @@ import img1 from '../images/img1.jpg'
 import img2 from '../images/img2.jpg'
 import img3 from '../images/img3.jpg'
 import img4 from '../images/img4.jpg'
+import faq from '../images/faq.jpg'
 import CourseList from '../components/Courses/CourseList'
+import FaqList from '../../Faq/FaqList'
 const Home = () => {
   return (
     <div>
@@ -31,12 +33,30 @@ const Home = () => {
               <div className='mt-[30px] lg:mt[70px] flex flex-col lg:flex-row lg:items-center gap-5
               lg:gap-[30px]'>
                 <div>
-                  <h2 className='text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700]
+                  <h2 className='text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[500]
                   text-headingColor'>
-                    30+
+                    20 ปี+
                   </h2>
-                  <span className='w-[100px] h-2 bg-brownColor rounded-full block mt-[-14px]'></span>
-                  <p className='text__para'>Lorem ipsum dolor sit amet</p>
+                  <span className='w-[120px] h-2 bg-brownColor rounded-full block mt-[-14px]'></span>
+                  <p className='text__para'>ประสบการณ์การสอน</p>
+                </div>
+
+                <div>
+                  <h2 className='text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[500]
+                  text-headingColor'>
+                    10 คน
+                  </h2>
+                  <span className='w-[120px] h-2 bg-brownColor rounded-full block mt-[-14px]'></span>
+                  <p className='text__para'>ติวเตอร์ชั้นนำ</p>
+                </div>
+
+                <div>
+                  <h2 className='text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[500]
+                  text-headingColor'>
+                    1000+
+                  </h2>
+                  <span className='w-[120px] h-2 bg-brownColor rounded-full block mt-[-14px]'></span>
+                  <p className='text__para'>จำนวนนักเรียน</p>
                 </div>
               </div>
 
@@ -65,6 +85,24 @@ const Home = () => {
           </div>
 
           <CourseList/>
+        </div>
+      </section>
+
+      {/* ----- FAQ Section ------ */}
+      <section>
+        <div className="container">
+          <div className='flex justify-between gap-[50px] lg:gap-0'>
+            <div className='w-1/2 hidden md:block'>
+              <img src={faq} alt="" />
+            </div>
+            <div className='w-full md:w-1/2'>
+              <h2 className='heading'>
+                คำถามที่พบบ่อย
+              </h2>
+
+              <FaqList/>
+            </div>
+          </div>
         </div>
       </section>
     </div>
