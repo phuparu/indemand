@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import sci01 from '../../images/sci01.jpg'
+import SidePanel from './SidePanel';
 const CourseDetail = () => {
   
   const [tab, setTab] = useState('about');
@@ -39,6 +40,9 @@ const CourseDetail = () => {
                 </button>
 
               </div>
+            </div>
+            <div>
+              <SidePanel/>
             </div>
         </div>
       </div>
