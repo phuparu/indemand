@@ -1,30 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../config";
+import { toast } from "react-toastify";
+import { HashLoader } from "react-spinners";
 import signupgif from "../images/signup.gif";
 import avatar from "../images/avatar1.png";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { users } from "../assets/data/mockuser";
 
 const Signup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [previewURL, setPreviewURL] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
     password: "",
     confirmPassword: "",
-    photo: "",
+    /* photo: "", */
     gender: "",
     role: "",
   });
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileInputChange = async (event) => {
-    const file = event.target.files[0];
-    //not finished
+  const handleFileInputChange = (event) => {
+    /* const file = event.target.files[0];
+    setSelectedFile(file); */
+    setFormData({ ...formData /* , photo: file */ });
   };
 
   const submitHandler = async (e) => {
@@ -33,8 +39,45 @@ const Signup = () => {
       alert("Passwords do not match!");
       return;
     }
-    console.log(formData);
+
+    setLoading(true);
+
+    const formDataToSend = new FormData();
+    for (const key in formData) {
+      formDataToSend.append(key, formData[key]);
+    }
+    setLoading(true);
+    // Simulate API call with mock data
+    console.log("Mock API call:", formData);
+    // Add the new user to the mock user data
+    users.push(formData);
+    // Simulate successful response
+    setLoading(false);
+    toast.success("Signup successful");
+
+    // Simulate navigation to login page after successful signup
+    navigate("/login");
+    /*  try {
+      const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message);
+      }
+
+      setLoading(false);
+      toast.success(result.message);
+      navigate("/login");
+    } catch (err) {
+      toast.error(err.message);
+      setLoading(false);
+    } */
   };
+
   return (
     <section className="px-5 xl:px-0">
       <div className="max-w-[1170px] mx-auto">
@@ -42,7 +85,11 @@ const Signup = () => {
           {/* IMG */}
           <div className="hidden lg:block rounded-l-lg ">
             <figure className="rounded-l-lg">
-              <img src={signupgif} className="w-full rounded-l-lg" alt="" />
+              <img
+                src={signupgif}
+                className="w-full rounded-l-lg"
+                alt="Signup"
+              />
             </figure>
           </div>
 
@@ -60,8 +107,8 @@ const Signup = () => {
                   value={formData.fullname}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border-b border-solid border-[#0066ff61]
-                focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
-               placeholder:text-textColor rounded-md cursor-pointer"
+                    focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
+                    placeholder:text-textColor rounded-md cursor-pointer"
                   required
                 />
               </div>
@@ -74,8 +121,8 @@ const Signup = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border-b border-solid border-[#0066ff61]
-                focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
-               placeholder:text-textColor rounded-md cursor-pointer"
+                    focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
+                    placeholder:text-textColor rounded-md cursor-pointer"
                   required
                 />
               </div>
@@ -88,8 +135,8 @@ const Signup = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border-b border-solid border-[#0066ff61]
-                focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
-               placeholder:text-textColor rounded-md cursor-pointer"
+                    focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
+                    placeholder:text-textColor rounded-md cursor-pointer"
                   required
                 />
               </div>
@@ -101,8 +148,8 @@ const Signup = () => {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border-b border-solid border-[#0066ff61]
-              focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
-            placeholder:text-textColor rounded-md cursor-pointer"
+                    focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
+                    placeholder:text-textColor rounded-md cursor-pointer"
                   required
                 />
               </div>
@@ -113,7 +160,7 @@ const Signup = () => {
                   <select
                     name="role"
                     className="text-textColor font-semibold text-[15px] leading-7
-                  px-4 py-3 focus:outline-none"
+                      px-4 py-3 focus:outline-none"
                     value={formData.role}
                     onChange={handleInputChange}
                   >
@@ -126,9 +173,8 @@ const Signup = () => {
                   Gender:
                   <select
                     name="gender"
-                    id=""
                     className="text-textColor font-semibold text-[15px] leading-7
-                  px-4 py-3 focus:outline-none"
+                      px-4 py-3 focus:outline-none"
                     value={formData.gender}
                     onChange={handleInputChange}
                   >
@@ -140,40 +186,48 @@ const Signup = () => {
                 </label>
               </div>
 
-              <div className="mb-5 flex items-center gap-3">
+              {/* <div className="mb-5 flex items-center gap-3">
                 <figure
                   className="w-[60px] h-[60px] rounded-full border-2 border-solid
-                border-primaryColor flex items-center justify-center"
+                    border-primaryColor flex items-center justify-center"
                 >
-                  <img src={avatar} alt="" className="w-full rounded-full" />
+                  <img
+                    src={avatar}
+                    alt="Avatar"
+                    className="w-full rounded-full"
+                  />
                 </figure>
                 <div className="relative w-[130px] h-[50px]">
                   <input
                     type="file"
                     name="photo"
-                    id="customFile"
                     accept=".jpg, .png"
                     className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                    onChange={handleInputChange}
+                    onChange={handleFileInputChange}
                   />
 
                   <label
                     htmlFor="customFile"
                     className="absolute top-0 left-0 w-full h-full
-                   flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden
-                   bg-beigeColor text-headingColor font-semibold rounded-lg truncate cursor-pointer"
+                      flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden
+                      bg-beigeColor text-headingColor font-semibold rounded-lg truncate cursor-pointer"
                   >
                     Upload Photo
                   </label>
                 </div>
-              </div>
+              </div> */}
 
               <div className="mt-7">
                 <button
+                  disabled={loading}
                   type="submit"
                   className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
                 >
-                  Sign Up
+                  {loading ? (
+                    <HashLoader size={35} color="#FFFFFF" />
+                  ) : (
+                    "Sign Up"
+                  )}
                 </button>
               </div>
 
