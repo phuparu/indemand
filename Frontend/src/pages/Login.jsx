@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../config";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authController.jsx";
-
-import { mockLoginResponse } from "../assets/data/mocklogin.js";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -20,19 +18,9 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
     try {
-      const result = mockLoginResponse;
-
-      // Simulate successful response
-      console.log(result, "login data");
-
-      toast.success(result.message);
-      navigate("/home");
-    } catch (err) {
-      toast.error("Failed to login. Please try again.");
-    }
-    /* setLoading(true); */
-    /* try {
       const res = await fetch("${BASE_URL}/auth/login", {
         method: "post",
         headers: { "Content-Type": "application/json" },
@@ -62,7 +50,7 @@ const Login = () => {
     } catch (err) {
       toast.error(err.message);
       setLoading(false);
-    } */
+    }
   };
 
   return (
