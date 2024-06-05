@@ -3,9 +3,10 @@ export const mockLoginResponse = {
     success: true,
     message: "Login successful",
     data: {
-      userId: 123,
-      username: "exampleUser",
-      // Add more user data as needed
+      fullname: "Phu",
+      password: 123,
+      email: "example@gmail.com",
+      role:'student',
     },
     token: "mockToken123", // Mock token for authentication
   };
