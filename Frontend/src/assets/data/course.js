@@ -13,7 +13,7 @@ export const course = [
     },
     {
         id:'02',
-        name:'Private MATH',
+        name:'Private MATHEMATICS',
         subject: 'Math',
         photo:math1,
         hours:'10',
@@ -21,7 +21,7 @@ export const course = [
     },
     {
         id:'03',
-        name:'Private ENG',
+        name:'Private ENGLISH',
         subject: 'Eng',
         photo:eng1,
         hours:'10',
