@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { authContext } from "../../context/authController";
 import user2 from "../../images/user2.jpg";
 import { BiMenu } from "react-icons/bi";
+
 const navLinks = [
   {
     path: "/home",
@@ -19,6 +20,7 @@ const navLinks = [
 ];
 
 const Header = () => {
+  const { user, role, dispatch } = useContext(authContext);
   const headerRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -37,7 +39,6 @@ const Header = () => {
 
   useEffect(() => {
     handleStickyHeader();
-
     return () => window.removeEventListener("scroll", handleStickyHeader);
   });
 
@@ -56,19 +57,26 @@ const Header = () => {
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <NavLink
-                    to={link.path}
+                    to={
+                      link.path === "/course" && role === "student"
+                        ? "/booking"
+                        : link.path
+                    }
                     className={(navClass) =>
                       navClass.isActive
                         ? "text-primaryColor text-[20px] leading-7 font-[600]"
-                        : "text-textColor text-[20px] leading-7 font-[500] hover:text-primaryColor"
+                        : "text-textColor text-[20px] leading-7 font-[500] hover:text-primaryColor transition duration-300 ease-in-out"
                     }
                   >
-                    {link.display}
+                    {link.path === "/course" && role === "student"
+                      ? "Booking"
+                      : link.display}
                   </NavLink>
                 </li>
               ))}
             </ul>
           </div>
+
           {/*---- NAV RIGHT ---- */}
           <div className="flex items-center gap-4">
             <div className="hidden">
@@ -79,14 +87,26 @@ const Header = () => {
               </Link>
             </div>
 
-            <Link to="/login">
+            {user ? (
               <button
                 className="bg-primaryColor py-2 px-6 text-white text-[20px] font-[600]
-                    h-[44px] flex items-center justify-center rounded-[50px] group hover:bg-[#FFDB5C] hover:border-none hover:text-black"
+                    h-[44px] flex items-center justify-center rounded-[50px] group hover:bg-[#FFDB5C] hover:border-none hover:text-black
+                    transition duration-300 ease-in-out"
+                onClick={() => dispatch({ type: "LOGOUT" })}
               >
-                Login
+                Logout
               </button>
-            </Link>
+            ) : (
+              <Link to="/login">
+                <button
+                  className="bg-primaryColor py-2 px-6 text-white text-[20px] font-[600]
+                      h-[44px] flex items-center justify-center rounded-[50px] group hover:bg-[#FFDB5C] hover:border-none hover:text-black
+                      transition duration-300 ease-in-out"
+                >
+                  Login
+                </button>
+              </Link>
+            )}
 
             <span className="md:hidden" onClick={toggleMenu}>
               <BiMenu className="w-6 h-6 cursor-pointer" />
