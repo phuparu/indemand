@@ -57,6 +57,7 @@ const Signup = () => {
 
     // Simulate navigation to login page after successful signup
     navigate("/login");
+
     /*  try {
       const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
         method: "POST",
@@ -164,6 +165,7 @@ const Signup = () => {
                     value={formData.role}
                     onChange={handleInputChange}
                   >
+                    <option value="">Select</option>
                     <option value="student">Student</option>
                     <option value="tutor">Tutor</option>
                   </select>
