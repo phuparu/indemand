@@ -35,7 +35,7 @@ const SidePanel1 = () => {
         </ul>
       </div>
 
-      <button className="btn px-2 w-full rounded-md">ซื้อ</button>
+      <button className="btn px-2 w-full rounded-md">จองเวลา</button>
     </div>
   );
 };
