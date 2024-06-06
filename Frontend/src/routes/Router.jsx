@@ -10,6 +10,7 @@ import Signup from "../pages/Signup";
 import Contact from "../pages/Contact";
 
 import { Routes, Route } from "react-router-dom";
+import TutorTime from "../pages/Tutor/TutorTime";
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/tutor/time" element={<TutorTime />} />
     </Routes>
   );
 };
