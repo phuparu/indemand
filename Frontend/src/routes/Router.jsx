@@ -11,6 +11,7 @@ import Contact from "../pages/Contact";
 
 import { Routes, Route } from "react-router-dom";
 import TutorTime from "../pages/Tutor/TutorTime";
+import UserProfile from "../pages/profile/UserProfile";
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/tutor/time" element={<TutorTime />} />
+      <Route path="/user/profile" element={<UserProfile />} />
     </Routes>
   );
 };
