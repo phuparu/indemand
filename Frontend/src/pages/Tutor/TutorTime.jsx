@@ -3,6 +3,7 @@ import { authContext } from "../../context/authController";
 import Datepicker from "../../components/time/Datepicker";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { users } from "../../assets/data/mockuser";
 const TutorTime = () => {
   const [tutorBook, setTutorBook] = useState({
     student_name: "",
@@ -30,7 +31,10 @@ const TutorTime = () => {
   return (
     <section>
       <div className="heading text-center py-[15px] px-[15px]">
-        <h1>Hello {user?.fullname}</h1>
+        <h1>Time Attendance</h1>
+      </div>
+      <div className="text-headingColor text-[32px] py-[15px] px-[15px] text-center">
+        <h2>Hello! {user?.fullname}</h2>
       </div>
       <div className="container w-full px-4 mx-auto max-w-screen-md">
         <form onSubmit={submitHandler} className="space-y-8">
