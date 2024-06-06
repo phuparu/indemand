@@ -4,26 +4,38 @@ import Datepicker from "../../components/time/Datepicker";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { users } from "../../assets/data/mockuser";
+
 const TutorTime = () => {
   const [tutorBook, setTutorBook] = useState({
     student_name: "",
     subject: "",
     detail: "",
-    time: "",
+    startTime: "",
+    endTime: "",
   });
 
   const handleInputChange = (e) => {
     setTutorBook({ ...tutorBook, [e.target.name]: e.target.value });
   };
 
-  const handleDateChange = (date) => {
-    setTutorBook({ ...tutorBook, time: date });
+  const handleStartDateChange = (date) => {
+    const formattedDate = date
+      ? `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`
+      : "";
+    setTutorBook({ ...tutorBook, startTime: formattedDate });
+  };
+
+  const handleEndDateChange = (date) => {
+    const formattedDate = date
+      ? `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`
+      : "";
+    setTutorBook({ ...tutorBook, endTime: formattedDate });
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(tutorBook);
-    toast.success("successful");
+    toast.success("Submission successful");
   };
 
   const { user } = useContext(authContext);
@@ -86,12 +98,22 @@ const TutorTime = () => {
           </div>
 
           <div className="items-center mx-4">
-            <label htmlFor="time" className="form__label px-4">
-              เวลาที่สอน
+            <label htmlFor="startTime" className="form__label px-4">
+              เวลาเริ่มต้น
             </label>
             <Datepicker
               className="form__input mt-1 w-full"
-              onDateChange={handleDateChange}
+              onDateChange={handleStartDateChange}
+            />
+          </div>
+
+          <div className="items-center mx-4">
+            <label htmlFor="endTime" className="form__label px-4">
+              เวลาสิ้นสุด
+            </label>
+            <Datepicker
+              className="form__input mt-1 w-full"
+              onDateChange={handleEndDateChange}
             />
           </div>
 

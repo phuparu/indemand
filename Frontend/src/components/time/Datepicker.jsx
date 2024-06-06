@@ -16,7 +16,7 @@ const Datepicker = ({ className, onDateChange }) => {
         className={`form__input ${className}`}
         selected={selectedDate}
         onChange={handleDateChange}
-        dateFormat="MM/dd/yyyy; hh:mm aa"
+        dateFormat="MM/dd/yyyy hh:mm aa"
         showTimeSelect
         timeIntervals={30}
         timeFormat="hh:mm aa"
