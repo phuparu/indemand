@@ -56,7 +56,7 @@ const Header = () => {
                   <NavLink
                     to={
                       link.path === "/course" && role === "student"
-                        ? "/booking"
+                        ? "/course"
                         : link.path
                     }
                     className={(navClass) =>
@@ -95,7 +95,7 @@ const Header = () => {
               <Link to="/login">
                 <button
                   className="bg-primaryColor py-2 px-6 text-white text-[20px] font-[600]
-                      h-[44px] flex items-center justify-center rounded-[50px] group hover:bg-[#FFDB5C] hover:border-none hover:text-black
+                      h-[44px] flex items-center justify-center rounded-[50px] group hover:bg-[#ffcf20] hover:border-none hover:text-black
                       transition duration-300 ease-in-out"
                 >
                   Login
