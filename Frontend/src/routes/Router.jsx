@@ -1,16 +1,18 @@
 import React from "react";
 import Home from "../pages/Home";
+import { Routes, Route } from "react-router-dom";
+
 import Course from "../pages/Course/Course";
 import CourseDetail from "../pages/Course/CouseDetail";
-import CourseDetail1 from "../pages/Course/CourseDetailSci";
-import CourseDetail2 from "../pages/Course/CourseDetailMath";
-import CourseDetail3 from "../pages/Course/CourseDetailEng";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
 import Contact from "../pages/Contact";
 
-import { Routes, Route } from "react-router-dom";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
+import ForgotPass from "../pages/ForgotPass";
+
+import TutorProfile from "../pages/Tutor/TutorProfile";
 import TutorTime from "../pages/Tutor/TutorTime";
+
 import UserProfile from "../pages/profile/UserProfile";
 
 const Router = () => {
@@ -22,9 +24,11 @@ const Router = () => {
       <Route path="/coursedetail/:id" element={<CourseDetail />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
+      <Route path="/forgotpass" element={<ForgotPass />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/tutor/time" element={<TutorTime />} />
       <Route path="/user/profile" element={<UserProfile />} />
+      <Route path="/tutor/profile" element={<TutorProfile />} />
     </Routes>
   );
 };
