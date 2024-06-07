@@ -16,7 +16,7 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    /* photo: "", */
+    photo: "",
     gender: "",
     role: "",
   });
@@ -28,15 +28,15 @@ const Signup = () => {
   };
 
   const handleFileInputChange = (event) => {
-    /* const file = event.target.files[0];
-    setSelectedFile(file); */
-    setFormData({ ...formData /* , photo: file */ });
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setFormData({ ...formData, photo: file });
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
 
@@ -46,19 +46,8 @@ const Signup = () => {
     for (const key in formData) {
       formDataToSend.append(key, formData[key]);
     }
-    setLoading(true);
-    // Simulate API call with mock data
-    console.log("Mock API call:", formData);
-    // Add the new user to the mock user data
-    users.push(formData);
-    // Simulate successful response
-    setLoading(false);
-    toast.success("Signup successful");
 
-    // Simulate navigation to login page after successful signup
-    navigate("/login");
-
-    /*  try {
+    try {
       const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
         method: "POST",
         body: formDataToSend,
@@ -76,7 +65,7 @@ const Signup = () => {
     } catch (err) {
       toast.error(err.message);
       setLoading(false);
-    } */
+    }
   };
 
   return (
@@ -164,6 +153,7 @@ const Signup = () => {
                       px-4 py-3 focus:outline-none"
                     value={formData.role}
                     onChange={handleInputChange}
+                    required
                   >
                     <option value="">Select</option>
                     <option value="student">Student</option>
@@ -188,7 +178,7 @@ const Signup = () => {
                 </label>
               </div>
 
-              {/* <div className="mb-5 flex items-center gap-3">
+              <div className="mb-5 flex items-center gap-3">
                 <figure
                   className="w-[60px] h-[60px] rounded-full border-2 border-solid
                     border-primaryColor flex items-center justify-center"
@@ -217,7 +207,7 @@ const Signup = () => {
                     Upload Photo
                   </label>
                 </div>
-              </div> */}
+              </div>
 
               <div className="mt-7">
                 <button
