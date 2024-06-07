@@ -41,6 +41,7 @@ const Login = () => {
         <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-10">
           Hello! <span className="text-primaryColor">Welcome</span> Back 👋
         </h3>
+
         <form className="py-4 md:py-0" onSubmit={submitHandler}>
           <div className="mb-5">
             <input
@@ -68,6 +69,17 @@ const Login = () => {
               required
             />
           </div>
+
+          <p className="mt-5 text-textColor ">
+            Forgot Password?
+            <Link
+              to="/forgotpass"
+              className="text-primaryColor font-medium ml-1"
+            >
+              Click here.
+            </Link>
+          </p>
+
           <div className="mt-7">
             <button
               type="submit"
@@ -77,6 +89,7 @@ const Login = () => {
               Login
             </button>
           </div>
+
           <p className="mt-5 text-textColor text-center">
             Don&apos;t have an account?
             <Link to="/register" className="text-primaryColor font-medium ml-1">
