@@ -49,6 +49,7 @@ const Header = () => {
       <div className="container">
         <div className="flex items-center justify-between">
           <div className="text-[30px]">I N D E M A N D</div>
+
           <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <ul className="menu flex items-center gap-[4rem]">
               {navLinks.map((link, index) => (
@@ -73,6 +74,7 @@ const Header = () => {
               ))}
             </ul>
           </div>
+
           <div className="flex items-center gap-4">
             <div className="hidden">
               <Link to="/">
@@ -81,7 +83,9 @@ const Header = () => {
                 </figure>
               </Link>
             </div>
+
             <h1>{user?.fullname}</h1>
+
             {user ? (
               <button
                 className="bg-primaryColor py-2 px-6 text-white text-[20px] font-[600]
@@ -102,6 +106,7 @@ const Header = () => {
                 </button>
               </Link>
             )}
+
             <span className="md:hidden" onClick={toggleMenu}>
               <BiMenu className="w-6 h-6 cursor-pointer" />
             </span>
