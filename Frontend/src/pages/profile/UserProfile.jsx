@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { users } from "../../assets/data/mockuser";
 import { toast } from "react-toastify";
-import { IoPersonSharp } from "react-icons/io5";
-import { IoSchoolSharp } from "react-icons/io5";
+import { IoPersonSharp, IoSchoolSharp } from "react-icons/io5";
 import { MdClass } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -52,7 +52,17 @@ const UserProfile = () => {
   };
 
   return (
-    <section className="bg-[#fff9ea]">
+    <motion.section
+      className="bg-[#fff9ea]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        ease: "linear",
+        duration: 2,
+        x: { duration: 1 },
+      }}
+    >
       <div className="container shadow-md border-[1px] bg-white rounded max-md:px-2">
         <h1 className="heading mx-auto text-center my-8">User Profile</h1>
         <div
@@ -64,17 +74,31 @@ const UserProfile = () => {
               <IoPersonSharp className="mx-3" />
               Name : &nbsp;
             </label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="fullname"
-                value={profileData.fullname}
-                onChange={handleInputChange}
-                className="form__input mt-1 w-full mx-4"
-              />
-            ) : (
-              <span> {profileData.fullname}</span>
-            )}
+
+            <AnimatePresence>
+              {isEditing ? (
+                <motion.input
+                  type="text"
+                  name="fullname"
+                  value={profileData.fullname}
+                  onChange={handleInputChange}
+                  className="form__input mt-1 w-full mx-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  key="fullname-input"
+                />
+              ) : (
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  key="fullname-span"
+                >
+                  {profileData.fullname}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="my-6 px-4 py-4 flex">
@@ -82,17 +106,31 @@ const UserProfile = () => {
               <IoSchoolSharp className="mx-3" />
               School : &nbsp;
             </label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="school"
-                value={profileData.school}
-                onChange={handleInputChange}
-                className="form__input mt-1 w-full mx-4"
-              />
-            ) : (
-              <span>{profileData.school}</span>
-            )}
+
+            <AnimatePresence>
+              {isEditing ? (
+                <motion.input
+                  type="text"
+                  name="school"
+                  value={profileData.school}
+                  onChange={handleInputChange}
+                  className="form__input mt-1 w-full mx-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  key="school-input"
+                />
+              ) : (
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  key="school-span"
+                >
+                  {profileData.school}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="my-6 px-4 py-4 flex">
@@ -100,17 +138,31 @@ const UserProfile = () => {
               <MdClass className="mx-3" />
               Grade : &nbsp;
             </label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="grade"
-                value={profileData.grade}
-                onChange={handleInputChange}
-                className="form__input mt-1 w-full mx-4"
-              />
-            ) : (
-              <span>{profileData.grade}</span>
-            )}
+
+            <AnimatePresence>
+              {isEditing ? (
+                <motion.input
+                  type="text"
+                  name="grade"
+                  value={profileData.grade}
+                  onChange={handleInputChange}
+                  className="form__input mt-1 w-full mx-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  key="grade-input"
+                />
+              ) : (
+                <motion.span
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  key="grade-span"
+                >
+                  {profileData.grade}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
@@ -132,24 +184,34 @@ const UserProfile = () => {
         </div>
 
         <div className="flex justify-end mx-4 my-6">
-          {isEditing ? (
-            <button
-              onClick={handleSave}
-              className="btn rounded bg-primaryColor text-white text-[18px] px-4 py-2"
-            >
-              Save
-            </button>
-          ) : (
-            <button
-              onClick={toggleEditMode}
-              className="btn rounded bg-primaryColor text-white text-[18px] px-4 py-2"
-            >
-              Edit Profile
-            </button>
-          )}
+          <AnimatePresence>
+            {isEditing ? (
+              <motion.button
+                onClick={handleSave}
+                className="btn rounded bg-primaryColor text-white text-[18px] px-4 py-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                key="save-button"
+              >
+                Save
+              </motion.button>
+            ) : (
+              <motion.button
+                onClick={toggleEditMode}
+                className="btn rounded bg-primaryColor text-white text-[18px] px-4 py-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                key="edit-button"
+              >
+                Edit Profile
+              </motion.button>
+            )}
+          </AnimatePresence>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
