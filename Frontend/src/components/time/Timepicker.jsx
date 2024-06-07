@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Datepicker = ({ className, onDateChange }) => {
+const Timepicker = ({ className, onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleDateChange = (date) => {
@@ -16,10 +16,15 @@ const Datepicker = ({ className, onDateChange }) => {
         className={`form__input ${className}`}
         selected={selectedDate}
         onChange={handleDateChange}
-        dateFormat="yyyy-MM-dd"
+        showTimeSelect
+        showTimeSelectOnly
+        timeIntervals={30}
+        timeFormat="hh:mm aa"
+        dateFormat="hh:mm aa"
+        timeCaption="Time"
       />
     </div>
   );
 };
 
-export default Datepicker;
+export default Timepicker;

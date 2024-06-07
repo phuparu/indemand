@@ -1,15 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import { authContext } from "../../context/authController";
 import Datepicker from "../../components/time/Datepicker";
+import Timepicker from "../../components/time/Timepicker";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { users } from "../../assets/data/mockuser";
 
 const TutorTime = () => {
   const [tutorBook, setTutorBook] = useState({
     student_name: "",
     subject: "",
     detail: "",
+    date: "",
     startTime: "",
     endTime: "",
     hours: 0,
@@ -19,10 +20,10 @@ const TutorTime = () => {
     const [startHour, startMinute] = startTime.split(":").map(Number);
     const [endHour, endMinute] = endTime.split(":").map(Number);
 
-    const start = new Date(1970, 0, 1, startHour, startMinute);
-    const end = new Date(1970, 0, 1, endHour, endMinute);
+    const startDate = new Date(1970, 0, 1, startHour, startMinute);
+    const endDate = new Date(1970, 0, 1, endHour, endMinute);
 
-    const diff = (end - start) / (1000 * 60 * 60);
+    const diff = (endDate - startDate) / (1000 * 60 * 60);
     return diff >= 0 ? diff : 0;
   };
 
@@ -37,22 +38,40 @@ const TutorTime = () => {
     setTutorBook({ ...tutorBook, [e.target.name]: e.target.value });
   };
 
-  const handleStartDateChange = (date) => {
-    const formattedDate = date
-      ? `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`
-      : "";
-    setTutorBook({ ...tutorBook, startTime: formattedDate });
+  const handleDateChange = (date) => {
+    const isoDate = date ? date.toISOString().split("T")[0] : "";
+    setTutorBook((prevState) => ({
+      ...prevState,
+      date: isoDate,
+      startTime: "",
+      endTime: "",
+    }));
   };
 
-  const handleEndDateChange = (date) => {
-    const formattedDate = date
-      ? `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`
-      : "";
-    setTutorBook({ ...tutorBook, endTime: formattedDate });
+  const handleStartTimeChange = (time) => {
+    if (!time) return;
+    const formattedTime = `${time.getHours()}:${time
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+    setTutorBook((prevState) => ({ ...prevState, startTime: formattedTime }));
+  };
+
+  const handleEndTimeChange = (time) => {
+    if (!time) return;
+    const formattedTime = `${time.getHours()}:${time
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+    setTutorBook((prevState) => ({ ...prevState, endTime: formattedTime }));
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (!tutorBook.startTime || !tutorBook.endTime) {
+      toast.error("Please provide both start and end times.");
+      return;
+    }
     console.log(tutorBook);
     toast.success("Submission successful");
   };
@@ -117,23 +136,49 @@ const TutorTime = () => {
           </div>
 
           <div className="items-center mx-4">
-            <label htmlFor="startTime" className="form__label px-4">
-              เวลาเริ่มต้น
+            <label htmlFor="date" className="form__label px-4">
+              วันที่สอน
             </label>
             <Datepicker
               className="form__input mt-1 w-full"
-              onDateChange={handleStartDateChange}
+              onDateChange={handleDateChange}
+              dateFormat="yyyy-MM-dd"
             />
+            {tutorBook.date && (
+              <p>Date: {new Date(tutorBook.date).toLocaleDateString()}</p>
+            )}
+          </div>
+
+          <div className="items-center mx-4">
+            <label htmlFor="startTime" className="form__label px-4">
+              เวลาเริ่มต้น
+            </label>
+            <Timepicker
+              className="form__input mt-1 w-full"
+              onDateChange={handleStartTimeChange}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeFormat="HH:mm"
+              timeCaption="Time"
+            />
+            {tutorBook.startTime && <p>Start Time: {tutorBook.startTime}</p>}
           </div>
 
           <div className="items-center mx-4">
             <label htmlFor="endTime" className="form__label px-4">
               เวลาสิ้นสุด
             </label>
-            <Datepicker
+            <Timepicker
               className="form__input mt-1 w-full"
-              onDateChange={handleEndDateChange}
+              onDateChange={handleEndTimeChange}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeFormat="HH:mm"
+              timeCaption="Time"
             />
+            {tutorBook.endTime && <p>End Time: {tutorBook.endTime}</p>}
           </div>
 
           <div className="mt-7 mx-4">
