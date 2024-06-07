@@ -1,12 +1,11 @@
-
-export const users = [
+export const tutors = [
     {
       id: 1,
-      fullname: "John Doe",
-      email: "john@example.com",
+      fullname: "Max Doe",
+      email: "max@example.com",
       password: "password123",
       gender: "male",
-      role: "student",
+      role: "tutor",
     },
     // Add more mock users as needed
   ];
