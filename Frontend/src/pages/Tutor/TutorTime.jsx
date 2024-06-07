@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { authContext } from "../../context/authController";
 import Datepicker from "../../components/time/Datepicker";
 import { toast } from "react-toastify";
@@ -12,7 +12,26 @@ const TutorTime = () => {
     detail: "",
     startTime: "",
     endTime: "",
+    hours: 0,
   });
+
+  const calculateHours = (startTime, endTime) => {
+    const [startHour, startMinute] = startTime.split(":").map(Number);
+    const [endHour, endMinute] = endTime.split(":").map(Number);
+
+    const start = new Date(1970, 0, 1, startHour, startMinute);
+    const end = new Date(1970, 0, 1, endHour, endMinute);
+
+    const diff = (end - start) / (1000 * 60 * 60);
+    return diff >= 0 ? diff : 0;
+  };
+
+  useEffect(() => {
+    if (tutorBook.startTime && tutorBook.endTime) {
+      const hours = calculateHours(tutorBook.startTime, tutorBook.endTime);
+      setTutorBook((prevState) => ({ ...prevState, hours }));
+    }
+  }, [tutorBook.startTime, tutorBook.endTime]);
 
   const handleInputChange = (e) => {
     setTutorBook({ ...tutorBook, [e.target.name]: e.target.value });
