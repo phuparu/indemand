@@ -13,7 +13,7 @@ import ForgotPass from "../pages/ForgotPass";
 import TutorProfile from "../pages/Tutor/TutorProfile";
 import TutorTime from "../pages/Tutor/TutorTime";
 
-import UserProfile from "../pages/profile/UserProfile";
+import UserProfile from "../pages/User/UserProfile";
 
 const Router = () => {
   return (
