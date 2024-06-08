@@ -1,4 +1,4 @@
-// mocklogin.js
+
 export const mockLoginResponses = {
   user: {
     data: {
