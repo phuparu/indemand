@@ -4,6 +4,7 @@ import Datepicker from "../../components/time/Datepicker";
 import Timepicker from "../../components/time/Timepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const Booking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,12 +119,15 @@ const Booking = () => {
               <p className="text-gray-700 mb-3">
                 Education Level: {courseItem.edulevel}
               </p>
-              <button
+              <motion.button
                 onClick={() => handleBookClick(courseItem)}
                 className="btn block w-full py-2 px-4 text-white font-semibold rounded hover:bg-orangeColor"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
               >
                 Book Now
-              </button>
+              </motion.button>
             </div>
           </div>
         ))}
@@ -163,19 +167,25 @@ const Booking = () => {
             )}
 
             <div className="flex justify-end">
-              <button
+              <motion.button
                 onClick={() => setIsModalOpen(false)}
                 className="py-2 px-4 bg-gray-500 text-white font-semibold rounded hover:bg-gray-700 mr-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
               >
                 Cancel
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
                 onClick={handleConfirmBooking}
                 className="py-2 px-4 bg-primaryColor text-white font-semibold rounded hover:bg-orangeColor"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
               >
                 Confirm Booking
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>

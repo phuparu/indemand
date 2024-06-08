@@ -4,6 +4,7 @@ import Datepicker from "../../components/time/Datepicker";
 import Timepicker from "../../components/time/Timepicker";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion";
 
 const TutorTime = () => {
   const [tutorBook, setTutorBook] = useState({
@@ -201,13 +202,16 @@ const TutorTime = () => {
           </div>
 
           <div className="mt-7 mx-4">
-            <button
+            <motion.button
               type="submit"
               className="btn rounded sm:w-fit bg-primaryColor text-white text-[18px] mt-7
               hover:border-none hover:text-black transition duration-300 ease-in-out"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
               Confirm
-            </button>
+            </motion.button>
           </div>
         </form>
       </div>

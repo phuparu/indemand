@@ -8,6 +8,7 @@ import faq from "../images/faq.jpg";
 import CourseList from "../components/Courses/CourseList";
 import FaqList from "../components/Faq/FaqList";
 import { authContext } from "../context/authController";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -40,12 +41,15 @@ const Home = () => {
                   เว็บไซต์ที่ช่วยให้การจองเวลาเรียนเป็นเรื่องง่าย
                 </p>
 
-                <button
+                <motion.button
                   onClick={handleBookNowClick}
                   className="btn text-[20px]"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
                 >
                   จองเวลาเลย
-                </button>
+                </motion.button>
               </div>
 
               {/* ---- hero section -----*/}
