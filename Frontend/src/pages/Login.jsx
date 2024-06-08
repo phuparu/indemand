@@ -2,10 +2,11 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authController";
-import { mockLoginResponse } from "../assets/data/mocklogin";
+import { mockLoginResponses } from "../assets/data/mocklogin";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [role, setRole] = useState("user"); // default role
   const { dispatch } = useContext(authContext);
   const navigate = useNavigate();
 
@@ -16,7 +17,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const result = mockLoginResponse;
+      const result = mockLoginResponses[role];
       console.log(result, "login data");
 
       dispatch({
@@ -68,6 +69,36 @@ const Login = () => {
             placeholder:text-textColor rounded-md cursor-pointer"
               required
             />
+          </div>
+
+          <div className="flex justify-around mb-5">
+            <button
+              type="button"
+              className={`px-4 py-2 rounded ${
+                role === "user" ? "bg-primaryColor text-white" : "bg-gray-200"
+              }`}
+              onClick={() => setRole("user")}
+            >
+              Login as User
+            </button>
+            <button
+              type="button"
+              className={`px-4 py-2 rounded ${
+                role === "tutor" ? "bg-primaryColor text-white" : "bg-gray-200"
+              }`}
+              onClick={() => setRole("tutor")}
+            >
+              Login as Tutor
+            </button>
+            <button
+              type="button"
+              className={`px-4 py-2 rounded ${
+                role === "admin" ? "bg-primaryColor text-white" : "bg-gray-200"
+              }`}
+              onClick={() => setRole("admin")}
+            >
+              Login as Admin
+            </button>
           </div>
 
           <p className="mt-5 text-textColor ">
