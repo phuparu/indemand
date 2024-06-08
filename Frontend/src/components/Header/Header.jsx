@@ -82,7 +82,7 @@ const Header = () => {
 
   const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
 
-  // Determine the correct set of navigation links based on the user's role
+  // navigation links based on the user's role
   const navLinks =
     role === "admin"
       ? adminNavLinks
@@ -92,7 +92,7 @@ const Header = () => {
       ? userNavLinks
       : guestNavLinks;
 
-  // Determine the profile path based on the user's role
+  //the profile path based on the user's role
   const profilePath =
     role === "admin"
       ? "/admin"

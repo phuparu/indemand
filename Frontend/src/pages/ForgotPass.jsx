@@ -26,7 +26,7 @@ const ForgotPass = () => {
     setLoading(true);
 
     try {
-      // Replace with your API call
+      // API call
       const response = await fetch(`/api/v1/auth/reset-password/${token}`, {
         method: "POST",
         headers: {

@@ -17,6 +17,13 @@ const TutorTime = () => {
     status: "Present",
   });
 
+  useEffect(() => {
+    if (tutorBook.startTime && tutorBook.endTime) {
+      const hours = calculateHours(tutorBook.startTime, tutorBook.endTime);
+      setTutorBook((prevState) => ({ ...prevState, hours }));
+    }
+  }, [tutorBook.startTime, tutorBook.endTime]);
+
   const calculateHours = (startTime, endTime) => {
     const [startHour, startMinute] = startTime.split(":").map(Number);
     const [endHour, endMinute] = endTime.split(":").map(Number);
@@ -27,13 +34,6 @@ const TutorTime = () => {
     const diff = (endDate - startDate) / (1000 * 60 * 60);
     return diff >= 0 ? diff : 0;
   };
-
-  useEffect(() => {
-    if (tutorBook.startTime && tutorBook.endTime) {
-      const hours = calculateHours(tutorBook.startTime, tutorBook.endTime);
-      setTutorBook((prevState) => ({ ...prevState, hours }));
-    }
-  }, [tutorBook.startTime, tutorBook.endTime]);
 
   const handleInputChange = (e) => {
     setTutorBook({ ...tutorBook, [e.target.name]: e.target.value });

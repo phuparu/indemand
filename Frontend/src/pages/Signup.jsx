@@ -47,6 +47,7 @@ const Signup = () => {
       formDataToSend.append(key, formData[key]);
     }
 
+    // Send form data to backend
     try {
       const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
         method: "POST",

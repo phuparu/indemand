@@ -47,7 +47,6 @@ const Admin = () => {
           hours: 1.5,
           status: "Absent",
         },
-        // More mock records here...
       ];
 
       setAttendanceData(mockData);

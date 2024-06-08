@@ -38,6 +38,7 @@ const Booking = () => {
     return 0;
   };
 
+  // dk what to implement
   const checkAvailability = () => {
     // Dummy function to simulate checking availability
     // Replace with actual availability check logic

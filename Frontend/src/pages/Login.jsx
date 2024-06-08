@@ -17,6 +17,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      // Mock login
       const result = mockLoginResponses[role];
       console.log(result, "login data");
 
