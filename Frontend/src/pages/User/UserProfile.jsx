@@ -51,6 +51,28 @@ const UserProfile = () => {
     toast.success("Submission successful");
   };
 
+  // Function to cancel booking
+  const cancelBooking = async (bookingId) => {
+    try {
+      // Call backend API to cancel booking
+      const response = await fetch(`your-api-endpoint/${bookingId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        // Remove canceled booking from state
+        setBookingHistory((prevHistory) =>
+          prevHistory.filter((booking) => booking.id !== bookingId)
+        );
+        toast.success("Booking canceled successfully");
+      } else {
+        toast.error("Failed to cancel booking");
+      }
+    } catch (error) {
+      console.error("Error canceling booking:", error);
+      toast.error("Failed to cancel booking");
+    }
+  };
+
   return (
     <motion.section
       className="bg-[#fff9ea]"
@@ -175,6 +197,12 @@ const UserProfile = () => {
               {bookingHistory.map((booking, index) => (
                 <li key={index} className="mb-2">
                   {booking.details}
+                  <button
+                    onClick={() => cancelBooking(booking.id)}
+                    className="btn ml-2 text-white bg-red-800"
+                  >
+                    Cancel Booking
+                  </button>
                 </li>
               ))}
             </ul>
