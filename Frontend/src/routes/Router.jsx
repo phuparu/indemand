@@ -15,6 +15,7 @@ import TutorTime from "../pages/Tutor/TutorTime";
 
 import UserProfile from "../pages/User/UserProfile";
 import Booking from "../pages/User/Booking";
+import Admin from "../Admin/admin";
 
 const Router = () => {
   return (
@@ -31,6 +32,8 @@ const Router = () => {
       <Route path="/user/profile" element={<UserProfile />} />
       <Route path="/tutor/profile" element={<TutorProfile />} />
       <Route path="/user/booking" element={<Booking />} />
+
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 };
