@@ -14,6 +14,7 @@ const TutorTime = () => {
     startTime: "",
     endTime: "",
     hours: 0,
+    status: "Present",
   });
 
   const calculateHours = (startTime, endTime) => {
@@ -64,6 +65,10 @@ const TutorTime = () => {
       .toString()
       .padStart(2, "0")}`;
     setTutorBook((prevState) => ({ ...prevState, endTime: formattedTime }));
+  };
+
+  const handleStatusChange = (e) => {
+    setTutorBook({ ...tutorBook, status: e.target.value });
   };
 
   const submitHandler = async (e) => {
@@ -120,7 +125,21 @@ const TutorTime = () => {
               <option value="eng">อังกฤษ</option>
             </select>
           </div>
-
+          <div className="items-center mx-4">
+            <label htmlFor="status" className="form__label px-4">
+              Status
+            </label>
+            <select
+              name="status"
+              value={tutorBook.status}
+              onChange={handleStatusChange}
+              className="mt-1 form__input"
+              required
+            >
+              <option value="Present">Present</option>
+              <option value="Absent">Absent</option>
+            </select>
+          </div>
           <div className="items-center mx-4">
             <label htmlFor="detail" className="form__label px-4">
               รายละเอียดที่สอน
