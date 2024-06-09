@@ -95,7 +95,7 @@ const Header = () => {
   //the profile path based on the user's role
   const profilePath =
     role === "admin"
-      ? "/admin"
+      ? "/admin/profile"
       : role === "tutor"
       ? "/tutor/profile"
       : "/user/profile";
