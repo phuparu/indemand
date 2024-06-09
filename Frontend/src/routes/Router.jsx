@@ -7,7 +7,7 @@ import CourseDetail from "../pages/Course/CouseDetail";
 import Contact from "../pages/Contact";
 
 import Login from "../pages/Login";
-import Signup from "../pages/Signup";
+import Register from "../pages/Register";
 import ForgotPass from "../pages/ForgotPass";
 
 import TutorProfile from "../pages/Tutor/TutorProfile";
@@ -15,7 +15,9 @@ import TutorTime from "../pages/Tutor/TutorTime";
 
 import UserProfile from "../pages/User/UserProfile";
 import Booking from "../pages/User/Booking";
+
 import Admin from "../Admin/admin";
+import AdminProfile from "../Admin/AdminProfile";
 
 const Router = () => {
   return (
@@ -25,7 +27,7 @@ const Router = () => {
       <Route path="/course" element={<Course />} />
       <Route path="/coursedetail/:id" element={<CourseDetail />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Signup />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/forgotpass" element={<ForgotPass />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/tutor/time" element={<TutorTime />} />
@@ -34,6 +36,7 @@ const Router = () => {
       <Route path="/user/booking" element={<Booking />} />
 
       <Route path="/admin" element={<Admin />} />
+      <Route path="/admin/profile" element={<AdminProfile />} />
     </Routes>
   );
 };
