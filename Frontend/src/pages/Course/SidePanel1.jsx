@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { authContext } from "../../context/authController";
+import Modal from "../../context/Modal";
 
 const SidePanel1 = () => {
+  const { user } = useContext(authContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleButtonClick = () => {
+    if (!user) {
+      setIsModalOpen(true);
+    } else {
+      // Handle the booking process
+    }
+  };
+
   return (
     <div className="shadow-panelShadow p-3 lg:p-5 rounded-md">
       <div className="flex items-center justify-between">
@@ -35,7 +48,16 @@ const SidePanel1 = () => {
         </ul>
       </div>
 
-      <button className="btn px-2 w-full rounded-md">จองเวลา</button>
+      <button
+        onClick={handleButtonClick}
+        className="btn px-2 w-full rounded-md hover:bg-yellow-400 transition duration-500 ease-in-out"
+      >
+        จองเวลา
+      </button>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <p>คุณต้องเข้าสู่ระบบก่อนที่จะจองเวลา</p>
+      </Modal>
     </div>
   );
 };

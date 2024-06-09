@@ -2,10 +2,11 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authController";
-import { mockLoginResponse } from "../assets/data/mocklogin";
+import { mockLoginResponses } from "../assets/data/mocklogin";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [role, setRole] = useState("user"); // default role
   const { dispatch } = useContext(authContext);
   const navigate = useNavigate();
 
@@ -16,7 +17,8 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const result = mockLoginResponse;
+      // Mock login
+      const result = mockLoginResponses[role];
       console.log(result, "login data");
 
       dispatch({
@@ -41,6 +43,7 @@ const Login = () => {
         <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-10">
           Hello! <span className="text-primaryColor">Welcome</span> Back 👋
         </h3>
+
         <form className="py-4 md:py-0" onSubmit={submitHandler}>
           <div className="mb-5">
             <input
@@ -68,14 +71,57 @@ const Login = () => {
               required
             />
           </div>
+
+          <div className="flex justify-around mb-5">
+            <button
+              type="button"
+              className={`px-4 py-2 rounded ${
+                role === "user" ? "bg-primaryColor text-white" : "bg-gray-200"
+              }`}
+              onClick={() => setRole("user")}
+            >
+              Login as User
+            </button>
+            <button
+              type="button"
+              className={`px-4 py-2 rounded ${
+                role === "tutor" ? "bg-primaryColor text-white" : "bg-gray-200"
+              }`}
+              onClick={() => setRole("tutor")}
+            >
+              Login as Tutor
+            </button>
+            <button
+              type="button"
+              className={`px-4 py-2 rounded ${
+                role === "admin" ? "bg-primaryColor text-white" : "bg-gray-200"
+              }`}
+              onClick={() => setRole("admin")}
+            >
+              Login as Admin
+            </button>
+          </div>
+
+          <p className="mt-5 text-textColor ">
+            Forgot Password?
+            <Link
+              to="/forgotpass"
+              className="text-primaryColor font-medium ml-1"
+            >
+              Click here.
+            </Link>
+          </p>
+
           <div className="mt-7">
             <button
               type="submit"
-              className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
+              className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3
+              hover:border-none hover:text-black transition duration-300 ease-in-out"
             >
               Login
             </button>
           </div>
+
           <p className="mt-5 text-textColor text-center">
             Don&apos;t have an account?
             <Link to="/register" className="text-primaryColor font-medium ml-1">

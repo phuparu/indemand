@@ -7,16 +7,16 @@ import signupgif from "../images/signup.gif";
 import avatar from "../images/avatar1.png";
 import { users } from "../assets/data/mockuser";
 
-const Signup = () => {
+const Register = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    fullname: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
-    /* photo: "", */
+    photo: "",
     gender: "",
     role: "",
   });
@@ -28,15 +28,15 @@ const Signup = () => {
   };
 
   const handleFileInputChange = (event) => {
-    /* const file = event.target.files[0];
-    setSelectedFile(file); */
-    setFormData({ ...formData /* , photo: file */ });
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setFormData({ ...formData, photo: file });
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
 
@@ -46,19 +46,9 @@ const Signup = () => {
     for (const key in formData) {
       formDataToSend.append(key, formData[key]);
     }
-    setLoading(true);
-    // Simulate API call with mock data
-    console.log("Mock API call:", formData);
-    // Add the new user to the mock user data
-    users.push(formData);
-    // Simulate successful response
-    setLoading(false);
-    toast.success("Signup successful");
 
-    // Simulate navigation to login page after successful signup
-    navigate("/login");
-
-    /*  try {
+    // Send form data to backend
+    try {
       const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
         method: "POST",
         body: formDataToSend,
@@ -76,7 +66,7 @@ const Signup = () => {
     } catch (err) {
       toast.error(err.message);
       setLoading(false);
-    } */
+    }
   };
 
   return (
@@ -103,9 +93,9 @@ const Signup = () => {
               <div className="mb-5">
                 <input
                   type="text"
-                  placeholder="Full Name"
-                  name="fullname"
-                  value={formData.fullname}
+                  placeholder="Username"
+                  name="username"
+                  value={formData.username}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border-b border-solid border-[#0066ff61]
                     focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
@@ -157,17 +147,15 @@ const Signup = () => {
 
               <div className="mb-5 flex items-center justify-between">
                 <label className="text-headingColor font-bold text-[16px] leading-7">
-                  Are you a:
                   <select
                     name="role"
                     className="text-textColor font-semibold text-[15px] leading-7
                       px-4 py-3 focus:outline-none"
                     value={formData.role}
                     onChange={handleInputChange}
+                    required
                   >
-                    <option value="">Select</option>
                     <option value="student">Student</option>
-                    <option value="tutor">Tutor</option>
                   </select>
                 </label>
 
@@ -188,7 +176,7 @@ const Signup = () => {
                 </label>
               </div>
 
-              {/* <div className="mb-5 flex items-center gap-3">
+              <div className="mb-5 flex items-center gap-3">
                 <figure
                   className="w-[60px] h-[60px] rounded-full border-2 border-solid
                     border-primaryColor flex items-center justify-center"
@@ -217,18 +205,19 @@ const Signup = () => {
                     Upload Photo
                   </label>
                 </div>
-              </div> */}
+              </div>
 
               <div className="mt-7">
                 <button
                   disabled={loading}
                   type="submit"
-                  className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
+                  className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3
+                  hover:border-none hover:text-black transition duration-300 ease-in-out"
                 >
                   {loading ? (
                     <HashLoader size={35} color="#FFFFFF" />
                   ) : (
-                    "Sign Up"
+                    "Register"
                   )}
                 </button>
               </div>
@@ -250,4 +239,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Register;

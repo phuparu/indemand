@@ -1,13 +1,27 @@
-// mockData.js
-export const mockLoginResponse = {
-    success: true,
-    message: "Login successful",
+
+export const mockLoginResponses = {
+  user: {
     data: {
-      fullname: "Phu",
-      password: 123,
-      email: "example@gmail.com",
-      role:'student',
+      user: { username: "Josh", email: "user@example.com" },
+      token: "user-token",
+      role: "student",
     },
-    token: "mockToken123", // Mock token for authentication
-  };
-  
+    message: "User logged in successfully",
+  },
+  tutor: {
+    data: {
+      user: { username: "Jane Tutor", email: "tutor@example.com" },
+      token: "tutor-token",
+      role: "tutor",
+    },
+    message: "Tutor logged in successfully",
+  },
+  admin: {
+    data: {
+      user: { username: "Admin", email: "admin@example.com" },
+      token: "admin-token",
+      role: "admin",
+    },
+    message: "Admin logged in successfully",
+  },
+};
