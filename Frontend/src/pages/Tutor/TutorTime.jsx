@@ -19,6 +19,26 @@ const TutorTime = () => {
   });
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // API call to fetch tutor book data
+        const response = await fetch("your-api-endpoint");
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0) {
+          // update state with the first entry from the API response
+          const firstEntry = data[0];
+          setTutorBook(firstEntry);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (tutorBook.startTime && tutorBook.endTime) {
       const hours = calculateHours(tutorBook.startTime, tutorBook.endTime);
       setTutorBook((prevState) => ({ ...prevState, hours }));
@@ -125,6 +145,20 @@ const TutorTime = () => {
               <option value="math">คณิตศาสตร์</option>
               <option value="eng">อังกฤษ</option>
             </select>
+            {/* Map  <select
+              name="subject"
+              value={tutorBook.subject}
+              onChange={handleInputChange}
+              className="mt-1 form__input"
+              required
+            >
+              <option value="">เลือกวิชาที่สอน</option>
+              {subjects.map((subject) => (
+                <option key={subject.id} value={subject.value}>
+                  {subject.label}
+                </option>
+              ))}
+            </select> */}
           </div>
           <div className="items-center mx-4">
             <label htmlFor="status" className="form__label px-4">
@@ -139,6 +173,7 @@ const TutorTime = () => {
             >
               <option value="Present">Present</option>
               <option value="Absent">Absent</option>
+              <option value="Cancel">Cancel</option>
             </select>
           </div>
           <div className="items-center mx-4">
