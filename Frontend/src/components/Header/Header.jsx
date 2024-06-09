@@ -110,7 +110,10 @@ const Header = () => {
     <header className="header flex items-center" ref={headerRef}>
       <div className="container">
         <div className="flex items-center justify-between">
-          <div className="text-[30px]" onClick={() => navigate("/home")}>
+          <div
+            className="text-[30px] cursor-pointer"
+            onClick={() => navigate("/home")}
+          >
             I N D E M A N D
           </div>
 
