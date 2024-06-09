@@ -40,6 +40,10 @@ const adminNavLinks = [
     path: "/admin",
     display: "Admin",
   },
+  {
+    path: "/admin/course",
+    display: "Add Course",
+  },
 ];
 
 const guestNavLinks = [
@@ -130,7 +134,11 @@ const Header = () => {
               <>
                 <Link to={profilePath}>
                   <figure className="w-[35px] h-[35px] rounded-full">
-                    <img src={avatar} className="w-full rounded-full" alt="" />
+                    <img
+                      src={avatar}
+                      className="w-full rounded-full transition duration-300 ease-in-out transform hover:scale-110 hover:shadow-lg"
+                      alt=""
+                    />
                   </figure>
                 </Link>
                 <h1>{user?.fullname}</h1>

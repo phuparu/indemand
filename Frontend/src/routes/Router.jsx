@@ -18,6 +18,7 @@ import Booking from "../pages/User/Booking";
 
 import Admin from "../Admin/admin";
 import AdminProfile from "../Admin/AdminProfile";
+import AdminCourse from "../Admin/AdminCourse";
 
 const Router = () => {
   return (
@@ -37,6 +38,7 @@ const Router = () => {
 
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/profile" element={<AdminProfile />} />
+      <Route path="/admin/course" element={<AdminCourse />} />
     </Routes>
   );
 };
