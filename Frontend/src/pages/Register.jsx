@@ -7,12 +7,12 @@ import signupgif from "../images/signup.gif";
 import avatar from "../images/avatar1.png";
 import { users } from "../assets/data/mockuser";
 
-const Signup = () => {
+const Register = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    fullname: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -93,9 +93,9 @@ const Signup = () => {
               <div className="mb-5">
                 <input
                   type="text"
-                  placeholder="Full Name"
-                  name="fullname"
-                  value={formData.fullname}
+                  placeholder="Username"
+                  name="username"
+                  value={formData.username}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border-b border-solid border-[#0066ff61]
                     focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
@@ -147,7 +147,6 @@ const Signup = () => {
 
               <div className="mb-5 flex items-center justify-between">
                 <label className="text-headingColor font-bold text-[16px] leading-7">
-                  Are you a:
                   <select
                     name="role"
                     className="text-textColor font-semibold text-[15px] leading-7
@@ -156,9 +155,7 @@ const Signup = () => {
                     onChange={handleInputChange}
                     required
                   >
-                    <option value="">Select</option>
                     <option value="student">Student</option>
-                    <option value="tutor">Tutor</option>
                   </select>
                 </label>
 
@@ -220,7 +217,7 @@ const Signup = () => {
                   {loading ? (
                     <HashLoader size={35} color="#FFFFFF" />
                   ) : (
-                    "Sign Up"
+                    "Register"
                   )}
                 </button>
               </div>
@@ -242,4 +239,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Register;
