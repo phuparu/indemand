@@ -15,8 +15,8 @@ const Home = () => {
   const { login } = useContext(authContext);
 
   const handleBookNowClick = () => {
-    if (login.user) {
-      navigate("/course");
+    if (login && login.user) {
+      navigate("/user/booking");
     } else {
       navigate("/login");
     }
