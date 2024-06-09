@@ -2,7 +2,7 @@
 export const mockLoginResponses = {
   user: {
     data: {
-      user: { fullname: "Josh", email: "user@example.com" },
+      user: { username: "Josh", email: "user@example.com" },
       token: "user-token",
       role: "student",
     },
@@ -10,7 +10,7 @@ export const mockLoginResponses = {
   },
   tutor: {
     data: {
-      user: { fullname: "Jane Tutor", email: "tutor@example.com" },
+      user: { username: "Jane Tutor", email: "tutor@example.com" },
       token: "tutor-token",
       role: "tutor",
     },
@@ -18,7 +18,7 @@ export const mockLoginResponses = {
   },
   admin: {
     data: {
-      user: { fullname: "Admin", email: "admin@example.com" },
+      user: { username: "Admin", email: "admin@example.com" },
       token: "admin-token",
       role: "admin",
     },
