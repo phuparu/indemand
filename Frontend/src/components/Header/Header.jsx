@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, Navigate, useNavigate } from "react-router-dom";
 import { authContext } from "../../context/authController";
 import avatar from "../../images/avatar1.png";
 import { BiMenu } from "react-icons/bi";
@@ -104,11 +104,15 @@ const Header = () => {
       ? "/tutor/profile"
       : "/user/profile";
 
+  const navigate = useNavigate();
+
   return (
     <header className="header flex items-center" ref={headerRef}>
       <div className="container">
         <div className="flex items-center justify-between">
-          <div className="text-[30px]">I N D E M A N D</div>
+          <div className="text-[30px]" onClick={() => navigate("/home")}>
+            I N D E M A N D
+          </div>
 
           <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <ul className="menu flex items-center gap-[4rem]">
