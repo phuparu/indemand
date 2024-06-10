@@ -145,7 +145,7 @@ const Register = () => {
                 />
               </div>
 
-              <div className="mb-5 flex items-center justify-between">
+              {/* <div className="mb-5 flex items-center justify-between">
                 <label className="text-headingColor font-bold text-[16px] leading-7">
                   <select
                     name="role"
@@ -174,7 +174,7 @@ const Register = () => {
                     <option value="other">Other</option>
                   </select>
                 </label>
-              </div>
+              </div> */}
 
               {/* <div className="mb-5 flex items-center gap-3">
                 <figure
