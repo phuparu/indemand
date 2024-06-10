@@ -6,6 +6,7 @@ import { HashLoader } from "react-spinners";
 import signupgif from "../images/signup.gif";
 import avatar from "../images/avatar1.png";
 import { users } from "../assets/data/mockuser";
+import axios from "../components/axiosCreds.js";
 
 const Register = () => {
   /* const [selectedFile, setSelectedFile] = useState(null); */
@@ -47,19 +48,11 @@ const Register = () => {
       formDataToSend.append(key, formData[key]);
     }
 
-    // Send form data to backend
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/auth/register`, {
-        method: "POST",
-        body: formDataToSend,
+      console.log(formData);
+      const result = axios.post('/auth/register', formData).then((res) => {
+        return res.data;
       });
-
-      const result = await res.json();
-
-      if (!res.ok) {
-        throw new Error(result.message);
-      }
-
       setLoading(false);
       toast.success(result.message);
       navigate("/login");

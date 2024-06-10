@@ -2,7 +2,7 @@ import pool from '../Config/db.js';
 
 const updateProfile = async (user_id, username, email, name, gender, birthdate, image) => {
     const result = await pool.query(
-        'UPDATE "user" SET username = $2, email = $3, firstname = $4, gender = $5, birthdate = $6, image = $7 WHERE user_id = $1 RETURNING user_id, username, email, name, gender, birthdate, image',
+        'UPDATE "user" SET username = $2, email = $3, name = $4, gender = $5, birthdate = $6, image = $7 WHERE user_id = $1 RETURNING user_id, username, email, name, gender, birthdate, image',
         [user_id, username, email, name, gender, birthdate, image]
     );
     return result.rows[0];
@@ -16,6 +16,18 @@ const updateTutorProfile = async (user_id, name, email, biography) => {
     const result2 = await pool.query(
         'UPDATE tutor SET biography = $2 WHERE user_id = $1 RETURNING user_id, biography',
         [user_id, biography]
+    );
+    return result2.rows[0];
+};
+
+const updateStudentProfile = async (user_id, name, email, gender, school, grade_level) => {
+    const result = await pool.query(
+        'UPDATE "user" SET name = $2 ,email = $3, gender = $4 WHERE user_id = $1;',
+        [user_id, name, email, gender]
+    );
+    const result2 = await pool.query(
+        'UPDATE student SET school = $2, grade_level = $3 WHERE user_id = $1 RETURNING user_id, school, grade_level',
+        [user_id, school, grade_level]
     );
     return result2.rows[0];
 };
@@ -54,6 +66,7 @@ const getName = async (user_id) => {
 export {
     updateProfile,
     updateTutorProfile,
+    updateStudentProfile,
     getProfile,
     getStudentProfile,
     getTutorProfile,

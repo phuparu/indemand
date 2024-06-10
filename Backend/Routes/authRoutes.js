@@ -65,7 +65,7 @@ authRouter.post('/register', async (req, res) => {
         if (await checkEmailDupe(email)) { return res.status(401).send('Email already in use'); }
 
         const newUser = await registerUser(username, email, password);
-        const addStudent = await setStudentRole(newUser.user_id);
+        await setStudentRole(newUser.user_id);
         res.status(201).json(newUser);
     } catch (err) {
         logger.error(err);
