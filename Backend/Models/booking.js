@@ -5,8 +5,8 @@ const newBooking = async (student_id, course_id, date, start_time, end_time) => 
     const endTimestamp = `${date} ${end_time}`;
 
     const booking = await pool.query(
-        `INSERT INTO session ( student_id, course_id, timerange) VALUES ($1, $2, tsrange($3::timestamp, $4::timestamp)) RETURNING session_id, student_id, course_id, timerange`,
-        [student_id, course_id, startTimestamp, endTimestamp]
+        `INSERT INTO session ( student_id, course_id, timerange, status) VALUES ($1, $2, tsrange($3::timestamp, $4::timestamp), $5) RETURNING session_id, student_id, course_id, timerange`,
+        [student_id, course_id, startTimestamp, endTimestamp, "Upcoming"]
     );
     return booking.rows[0];
 }

@@ -5,6 +5,7 @@ import logger from '../Middleware/logger.js';
 import {
     updateProfile,
     getProfile,
+    updateStudentProfile,
     getStudentProfile,
     getTutorProfile,
     updateTutorProfile,
@@ -68,6 +69,22 @@ profileRouter.post('/update/tutor', async (req, res) => {
         res.sendStatus(500);
     }
 });
+
+profileRouter.post('/update/student', async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) { return res.sendStatus(401); }
+        const user_id = jwt.verify(token, process.env.JWT_SECRET).user_id;
+
+        const { username, email, gender, school, grade } = req.body;
+        const result = await updateStudentProfile(user_id, username, email, gender, school, grade);
+        res.status(200).json(result);
+    } catch (err) {
+        logger.error(err);
+        res.sendStatus(500);
+    }
+});
+
 
 profileRouter.get('/getName', async (req, res) => {
     try {

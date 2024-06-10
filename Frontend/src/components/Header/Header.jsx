@@ -91,18 +91,18 @@ const Header = () => {
     role === "admin"
       ? adminNavLinks
       : role === "tutor"
-      ? tutorNavLinks
-      : role === "student"
-      ? userNavLinks
-      : guestNavLinks;
+        ? tutorNavLinks
+        : role === "student"
+          ? userNavLinks
+          : guestNavLinks;
 
   //the profile path based on the user's role
   const profilePath =
     role === "admin"
       ? "/admin/profile"
       : role === "tutor"
-      ? "/tutor/profile"
-      : "/user/profile";
+        ? "/tutor/profile"
+        : "/user/profile";
 
   const navigate = useNavigate();
 
@@ -154,7 +154,7 @@ const Header = () => {
                     className="bg-primaryColor py-2 px-6 text-white text-[20px] font-[600]
                       h-[44px] flex items-center justify-center rounded-[50px] group hover:bg-[#FFDB5C] hover:border-none hover:text-black
                       transition duration-300 ease-in-out"
-                    onClick={() => dispatch({ type: "LOGOUT" })}
+                    onClick={() => (dispatch({ type: "LOGOUT" }))}
                   >
                     Logout
                   </button>

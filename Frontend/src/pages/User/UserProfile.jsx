@@ -23,6 +23,7 @@ const UserProfile = () => {
   const fetchData = async () => {
     try {
       await axios.get("/profile/get").then((res) => {
+        console.log("User profile data:", res.data);
         setProfileData({
           username: res.data.name,
           email: res.data.email,
@@ -65,6 +66,7 @@ const UserProfile = () => {
 
   const handleSave = () => {
     console.log("Profile data saved:", profileData);
+    axios.post("/profile/update/student", profileData);
     setIsEditing(false);
     toast.success("Submission successful");
   };
@@ -86,7 +88,6 @@ const UserProfile = () => {
   };
 
   const columns = [
-    { key: "tutorName", title: "Tutor Name" },
     { key: "subject", title: "Subject" },
     { key: "date", title: "Date" },
     { key: "start_time", title: "Start Time" },
@@ -329,7 +330,6 @@ const UserProfile = () => {
                       key={booking.id}
                       className="border-b border-gray-200 hover:bg-gray-100"
                     >
-                      <td className="py-3 px-4">{booking.tutor_name}</td>
                       <td className="py-3 px-4">{booking.course_id}</td>
 
                       <td className="py-3 px-4">{booking.date}</td>

@@ -6,33 +6,6 @@ import { MdSubject, MdEmail } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "../../components/axiosCreds";
 
-const mockData = [
-  {
-    id: 1,
-    tutorName: "John Doe",
-    studentName: "Jane Smith",
-    subject: "Mathematics",
-    detail: "Algebra",
-    date: "2023-06-01",
-    startTime: "10:00",
-    endTime: "11:00",
-    hours: 1,
-    status: "Present",
-  },
-  {
-    id: 2,
-    tutorName: "Alice Johnson",
-    studentName: "Bob Brown",
-    subject: "Physics",
-    detail: "Mechanics",
-    date: "2023-06-02",
-    startTime: "09:00",
-    endTime: "10:30",
-    hours: 1.5,
-    status: "Absent",
-  },
-];
-
 const TutorProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tutorData, setTutorData] = useState({
@@ -63,8 +36,10 @@ const TutorProfile = () => {
     fetchBookingHistory();
   }, []);
 
-  const fetchBookingHistory = () => {
-    setBookingHistory(mockData);
+  const fetchBookingHistory = async () => {
+    const result = await axios.get("/booking/getTutorBooking")
+    setBookingHistory(result.data);
+    console.log(bookingHistory);
   };
 
   const toggleEditMode = () => {
@@ -92,13 +67,11 @@ const TutorProfile = () => {
   };
 
   const columns = [
-    { key: "tutorName", title: "Tutor Name" },
-    { key: "studentName", title: "Student Name" },
+    { key: "student_id", title: "Student ID" },
     { key: "subject", title: "Subject" },
     { key: "detail", title: "Detail" },
     { key: "date", title: "Date" },
     { key: "time", title: "Time" },
-    { key: "hours", title: "Hours" },
     { key: "status", title: "Status" },
   ];
 
@@ -257,18 +230,16 @@ const TutorProfile = () => {
             <tbody className="text-gray-700">
               {bookingHistory.map((record) => (
                 <tr
-                  key={record.id}
+                  key={record.session_id}
                   className="border-b border-gray-200 hover:bg-gray-100"
                 >
-                  <td className="py-3 px-4">{record.tutorName}</td>
-                  <td className="py-3 px-4">{record.studentName}</td>
-                  <td className="py-3 px-4">{record.subject}</td>
-                  <td className="py-3 px-4">{record.detail}</td>
+                  <td className="py-3 px-4">{record.student_id}</td>
+                  <td className="py-3 px-4">{record.course_id}</td>
+                  <td className="py-3 px-4">{record.feedback}</td>
                   <td className="py-3 px-4">{record.date}</td>
                   <td className="py-3 px-4">
-                    {record.startTime} - {record.endTime}
+                    {record.start_time} - {record.end_time}
                   </td>
-                  <td className="py-3 px-4">{record.hours}</td>
                   <td
                     className={`py-3 px-4 ${record.status === "Present"
                       ? "text-green-600"
