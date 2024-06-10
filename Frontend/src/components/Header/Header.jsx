@@ -14,10 +14,6 @@ const userNavLinks = [
     path: "/user/booking",
     display: "Booking",
   },
-  {
-    path: "/contact",
-    display: "Contact",
-  },
 ];
 
 const tutorNavLinks = [
@@ -28,10 +24,6 @@ const tutorNavLinks = [
   {
     path: "/tutor/time",
     display: "Time attendance",
-  },
-  {
-    path: "/contact",
-    display: "Contact",
   },
 ];
 
@@ -54,10 +46,6 @@ const guestNavLinks = [
   {
     path: "/course",
     display: "Course",
-  },
-  {
-    path: "/contact",
-    display: "Contact",
   },
 ];
 
