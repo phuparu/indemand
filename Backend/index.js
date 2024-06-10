@@ -21,6 +21,7 @@ const corsOptions = {
         'http://localhost',
         'http://localhost:3000',
         'http://localhost:5173',
+        'http://sardines.thddns.net:7270',
     ],
     credentials: true,
 }

@@ -7,6 +7,8 @@ import {
     checkForOverlap,
     getTutorBooking,
     updateBooking,
+    getStudentBooking,
+    cancelBooking,
 } from '../Models/booking.js';
 import { getRole } from '../Models/auth.js';
 
@@ -74,7 +76,7 @@ bookingRouter.get('/getStudentBooking', async (req, res) => {
         const user_id = jwt.verify(token, process.env.JWT_SECRET).user_id;
         if (await getRole(user_id) !== 'student') { return res.sendStatus(403); }
 
-        const booking = await getBooking(user_id);
+        const booking = await getStudentBooking(user_id);
         res.status(200).json(booking);
     } catch (err) {
         logger.error(err);
@@ -88,6 +90,19 @@ bookingRouter.post('/update', async (req, res) => {
         if (!booking_id) { return res.sendStatus(400); }
 
         const booking = await updateBooking(session_id, status, feedback, date, start_time, end_time);
+        res.status(200).json(booking);
+    } catch (err) {
+        logger.error(err);
+        res.sendStatus(500);
+    }
+});
+
+bookingRouter.post('/cancel', async (req, res) => {
+    try {
+        const { session_id } = req.body;
+        if (!session_id) { return res.sendStatus(400); }
+        console.log(session_id);
+        const booking = await cancelBooking(session_id);
         res.status(200).json(booking);
     } catch (err) {
         logger.error(err);

@@ -64,7 +64,6 @@ const TutorProfile = () => {
   }, []);
 
   const fetchBookingHistory = () => {
-    // Simulate API call with mock data
     setBookingHistory(mockData);
   };
 
