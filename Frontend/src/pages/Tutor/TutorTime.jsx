@@ -5,6 +5,7 @@ import Timepicker from "../../components/time/Timepicker";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
+import axios from "../../components/axiosCreds.js";
 
 const TutorTime = () => {
   const [tutorBook, setTutorBook] = useState({
@@ -18,25 +19,25 @@ const TutorTime = () => {
     status: "Present",
   });
 
+  const [sessions, setSessions] = useState([]);
+  const [selectedSession, setSelectedSession] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // API call to fetch tutor book data
-        const response = await fetch("your-api-endpoint");
-        const data = await response.json();
-
-        if (Array.isArray(data) && data.length > 0) {
-          // update state with the first entry from the API response
-          const firstEntry = data[0];
-          setTutorBook(firstEntry);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        const response = await axios.get("/booking/getTutorBooking");
+        return (response.data);
+      }
+      catch (err) {
+        console.log(err);
       }
     };
-
-    fetchData();
+    fetchData().then((data) => {
+      setSessions(data);
+      console.log(data);
+    });
   }, []);
+
 
   useEffect(() => {
     if (tutorBook.startTime && tutorBook.endTime) {
@@ -94,6 +95,7 @@ const TutorTime = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log()
     if (!tutorBook.startTime || !tutorBook.endTime) {
       toast.error("Please provide both start and end times.");
       return;
@@ -102,7 +104,8 @@ const TutorTime = () => {
     toast.success("Submission successful");
   };
 
-  const { user } = useContext(authContext);
+
+
 
   return (
     <section>
@@ -110,21 +113,44 @@ const TutorTime = () => {
         <h1>Time Attendance</h1>
       </div>
       <div className="text-headingColor text-[32px] py-[15px] px-[15px] text-center">
-        <h2>Hello! {user?.fullname}</h2>
+        <h2>Hello! { }</h2>
       </div>
       <div className="container w-full px-4 mx-auto max-w-screen-md">
         <form onSubmit={submitHandler} className="space-y-8">
           <div className="items-center mx-4">
             <label htmlFor="student_name" className="form__label px-4">
-              ชื่อเด็กนักเรียนที่สอน
+              คาบเรียน
+            </label>
+            <select
+              name="session"
+              value={tutorBook.session}
+              onChange={(e) => {
+                const selectedSession = sessions.find(session => session.session_id === e.target.value);
+                setSelectedSession(selectedSession);
+              }}
+              className="mt-1 form__input"
+              required>
+              <option value="">เลือกคาบเรียน</option>
+              {sessions.map((session) => (
+                <option key={session.session_id} value={session.session_id}>
+                  {(session.timerange).toString() + " " + (session.course_id).toString()}
+                </option>
+              ))
+              }
+            </select>
+          </div>
+          <div className="items-center mx-4">
+            <label htmlFor="student_name" className="form__label px-4">
+              รหัสนักเรียน
             </label>
             <input
               type="text"
-              name="student_name"
-              value={tutorBook.student_name}
+              name="student_id"
+              value={selectedSession.student_id}
               onChange={handleInputChange}
-              placeholder="ชื่อเล่นของน้องที่สอน"
+              placeholder="รหัสนักเรียนที่สอน"
               className="form__input mt-1"
+              disabled
               required
             />
           </div>
@@ -133,32 +159,14 @@ const TutorTime = () => {
             <label htmlFor="subject" className="form__label px-4">
               วิชาที่สอน
             </label>
-            <select
+            <input
               name="subject"
-              value={tutorBook.subject}
+              value={selectedSession.course_id}
               onChange={handleInputChange}
               className="mt-1 form__input"
+              disabled
               required
-            >
-              <option value="">เลือกวิชาที่สอน</option>
-              <option value="sci">วิทยาศาสตร์</option>
-              <option value="math">คณิตศาสตร์</option>
-              <option value="eng">อังกฤษ</option>
-            </select>
-            {/* Map  <select
-              name="subject"
-              value={tutorBook.subject}
-              onChange={handleInputChange}
-              className="mt-1 form__input"
-              required
-            >
-              <option value="">เลือกวิชาที่สอน</option>
-              {subjects.map((subject) => (
-                <option key={subject.id} value={subject.value}>
-                  {subject.label}
-                </option>
-              ))}
-            </select> */}
+            />
           </div>
           <div className="items-center mx-4">
             <label htmlFor="status" className="form__label px-4">
@@ -166,7 +174,6 @@ const TutorTime = () => {
             </label>
             <select
               name="status"
-              value={tutorBook.status}
               onChange={handleStatusChange}
               className="mt-1 form__input"
               required
@@ -183,7 +190,7 @@ const TutorTime = () => {
             <input
               type="text"
               name="detail"
-              value={tutorBook.detail}
+              value={selectedSession.feedback}
               onChange={handleInputChange}
               placeholder="รายละเอียด หรือหัวข้อที่สอน"
               className="form__input mt-1"
@@ -199,8 +206,8 @@ const TutorTime = () => {
               onDateChange={handleDateChange}
               dateFormat="yyyy-MM-dd"
             />
-            {tutorBook.date && (
-              <p>Date: {new Date(tutorBook.date).toLocaleDateString()}</p>
+            {selectedSession.date && (
+              <p>Date: {new Date(selectedSession.date).toLocaleDateString()}</p>
             )}
           </div>
 
@@ -217,7 +224,7 @@ const TutorTime = () => {
               timeFormat="HH:mm"
               timeCaption="Time"
             />
-            {tutorBook.startTime && <p>Start Time: {tutorBook.startTime}</p>}
+            {selectedSession.start_time && <p>Start Time: {selectedSession.start_time}</p>}
           </div>
 
           <div className="items-center mx-4">
@@ -233,7 +240,7 @@ const TutorTime = () => {
               timeFormat="HH:mm"
               timeCaption="Time"
             />
-            {tutorBook.endTime && <p>End Time: {tutorBook.endTime}</p>}
+            {selectedSession.end_time && <p>End Time: {selectedSession.end_time}</p>}
           </div>
 
           <div className="mt-7 mx-4">

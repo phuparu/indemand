@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authContext } from "../context/authController";
 import { mockLoginResponses } from "../assets/data/mocklogin";
+import axios from '../components/axiosCreds.js';
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [role, setRole] = useState("user"); // default role
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const { dispatch } = useContext(authContext);
   const navigate = useNavigate();
 
@@ -17,9 +17,11 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      // Mock login
-      const result = mockLoginResponses[role];
-      console.log(result, "login data");
+      const result = await axios.post("/auth/login", {
+        username: formData.username,
+        password: formData.password,
+      });
+      console.log(result.data);
 
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -47,10 +49,10 @@ const Login = () => {
         <form className="py-4 md:py-0" onSubmit={submitHandler}>
           <div className="mb-5">
             <input
-              type="email"
-              placeholder="Enter Your Email"
-              name="email"
-              value={formData.email}
+              type="username"
+              placeholder="Enter Your username"
+              name="username"
+              value={formData.username}
               onChange={handleInputChange}
               className="w-full px-4 py-3 border-b border-solid border-[#0066ff61]
             focus:outline-none focus:border-b-primaryColor text-[22px] leading-7 text-headingColor
@@ -70,36 +72,6 @@ const Login = () => {
             placeholder:text-textColor rounded-md cursor-pointer"
               required
             />
-          </div>
-
-          <div className="flex justify-around mb-5">
-            <button
-              type="button"
-              className={`px-4 py-2 rounded ${
-                role === "user" ? "bg-primaryColor text-white" : "bg-gray-200"
-              }`}
-              onClick={() => setRole("user")}
-            >
-              Login as User
-            </button>
-            <button
-              type="button"
-              className={`px-4 py-2 rounded ${
-                role === "tutor" ? "bg-primaryColor text-white" : "bg-gray-200"
-              }`}
-              onClick={() => setRole("tutor")}
-            >
-              Login as Tutor
-            </button>
-            <button
-              type="button"
-              className={`px-4 py-2 rounded ${
-                role === "admin" ? "bg-primaryColor text-white" : "bg-gray-200"
-              }`}
-              onClick={() => setRole("admin")}
-            >
-              Login as Admin
-            </button>
           </div>
 
           <p className="mt-5 text-textColor ">

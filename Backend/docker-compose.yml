@@ -1,0 +1,12 @@
+services:
+  indemand:
+    image: postgres:latest
+    container_name: "database"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "Mango69."
+      POSTGRES_DB: "indemand"
+    volumes:
+      - ./data:/var/lib/postgresql/data

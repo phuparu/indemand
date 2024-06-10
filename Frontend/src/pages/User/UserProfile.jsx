@@ -6,6 +6,7 @@ import { MdClass, MdEmail } from "react-icons/md";
 import { FaBirthdayCake } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "../../components/axiosCreds";
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,51 +20,39 @@ const UserProfile = () => {
   });
   const [bookingHistory, setBookingHistory] = useState([]);
 
-  useEffect(() => {
-    const user = users[0];
-    setProfileData({
-      username: user.username,
-      email: user.email,
-      gender: user.gender,
-      school: user.school || "",
-      grade: user.grade || "",
-      birthdate: user.birthdate,
-    });
-
-    fetchBookingHistory();
-  }, []);
+  const fetchData = async () => {
+    try {
+      await axios.get("/profile/get").then((res) => {
+        setProfileData({
+          username: res.data.name,
+          email: res.data.email,
+          gender: res.data.gender || "",
+          school: res.data.school || "",
+          grade: res.data.grade_level || "",
+          birthdate: res.data.birthdate || "",
+        });
+      });
+    } catch (error) {
+      console.error("Error fetching user profile data:", error);
+    }
+  };
 
   const fetchBookingHistory = async () => {
     try {
-      // Mock booking history data
-      const data = [
-        {
-          id: 1,
-          tutorName: "John Doe",
-          subject: "Math",
-          detail: "Algebra",
-          date: "2024-06-10",
-          startTime: "10:00 AM",
-          endTime: "11:00 AM",
-          status: "Upcoming",
-        },
-        {
-          id: 2,
-          tutorName: "Jane Smith",
-          subject: "Science",
-          detail: "Physics",
-          date: "2024-06-11",
-          startTime: "2:00 PM",
-          endTime: "3:00 PM",
-          status: "Upcoming",
-        },
-        // Add more mock data as needed
-      ];
-      setBookingHistory(data);
+      await axios.get("/booking/getStudentBooking").then((res) => {
+        console.log("Booking history:", res.data);
+        setBookingHistory(res.data);
+      });
     } catch (error) {
       console.error("Error fetching booking history:", error);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+    fetchBookingHistory();
+  }, []);
+
 
   const toggleEditMode = () => {
     setIsEditing(!isEditing);
@@ -80,19 +69,27 @@ const UserProfile = () => {
     toast.success("Submission successful");
   };
 
-  const cancelBooking = (bookingId) => {
-    setBookingHistory((prevHistory) =>
-      prevHistory.filter((booking) => booking.id !== bookingId)
-    );
-    toast.success("Booking canceled successfully");
+  const cancelBooking = async (bookingId) => {
+
+    try {
+      await axios.post("/booking/cancel", {
+        session_id: bookingId,
+      });
+      setBookingHistory((prevHistory) =>
+        prevHistory.filter((booking) => booking.session_id !== bookingId)
+      );
+      toast.success("Booking canceled successfully");
+    } catch (error) {
+      console.error("Error canceling booking:", error);
+      toast.error("Failed to cancel booking. Please try again later.");
+    }
   };
 
   const columns = [
     { key: "tutorName", title: "Tutor Name" },
     { key: "subject", title: "Subject" },
-
     { key: "date", title: "Date" },
-    { key: "startTime", title: "Start Time" },
+    { key: "start_time", title: "Start Time" },
     { key: "endTime", title: "End Time" },
     { key: "status", title: "Status" },
     { key: "actions", title: "Actions" },
@@ -332,25 +329,21 @@ const UserProfile = () => {
                       key={booking.id}
                       className="border-b border-gray-200 hover:bg-gray-100"
                     >
-                      <td className="py-3 px-4">{booking.tutorName}</td>
-                      <td className="py-3 px-4">{booking.subject}</td>
+                      <td className="py-3 px-4">{booking.tutor_name}</td>
+                      <td className="py-3 px-4">{booking.course_id}</td>
 
                       <td className="py-3 px-4">{booking.date}</td>
-                      <td className="py-3 px-4">{booking.startTime}</td>
-                      <td className="py-3 px-4">{booking.endTime}</td>
+                      <td className="py-3 px-4">{booking.start_time}</td>
+                      <td className="py-3 px-4">{booking.end_time}</td>
                       <td
-                        className={`py-3 px-4 ${
-                          booking.status === "Upcoming"
-                            ? "text-yellow-600"
-                            : "text-green-600"
-                        }`}
+                        className={`py-3 px-4 ${booking.status === "Upcoming" ? "text-green-500" : "text-yellow-500"}`}
                       >
-                        {booking.status}
+                        {booking.status || "Upcoming"}
                       </td>
                       <td className="py-3 px-4">
                         {booking.status === "Upcoming" && (
                           <button
-                            onClick={() => cancelBooking(booking.id)}
+                            onClick={() => cancelBooking(booking.session_id)}
                             className="btn ml-2 text-white bg-red-800"
                           >
                             Cancel Booking
