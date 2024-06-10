@@ -8,7 +8,7 @@ import avatar from "../images/avatar1.png";
 import { users } from "../assets/data/mockuser";
 
 const Register = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  /* const [selectedFile, setSelectedFile] = useState(null); */
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    photo: "",
+    /* photo: "", */
     gender: "",
     role: "",
   });
@@ -176,7 +176,7 @@ const Register = () => {
                 </label>
               </div>
 
-              <div className="mb-5 flex items-center gap-3">
+              {/* <div className="mb-5 flex items-center gap-3">
                 <figure
                   className="w-[60px] h-[60px] rounded-full border-2 border-solid
                     border-primaryColor flex items-center justify-center"
@@ -205,7 +205,7 @@ const Register = () => {
                     Upload Photo
                   </label>
                 </div>
-              </div>
+              </div> */}
 
               <div className="mt-7">
                 <button
