@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { IoPersonSharp, IoSchoolSharp } from "react-icons/io5";
 import { MdSubject, MdEmail } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "../../components/axiosCreds";
 
 const mockData = [
   {
@@ -42,15 +43,23 @@ const TutorProfile = () => {
   });
   const [bookingHistory, setBookingHistory] = useState([]);
 
-  useEffect(() => {
-    const tutor = tutors[0];
-    setTutorData({
-      fullname: tutor.username,
-      profile: tutor.profile,
-      subject: tutor.subject,
-      email: tutor.email,
-    });
+  const fetchData = async () => {
+    try {
+      await axios.get("/profile/get").then((res) => {
+        setTutorData({
+          fullname: res.data.name,
+          email: res.data.email,
+          profile: res.data.biography || "",
+          subject: res.data.courses.join(" ") || "",
+        });
+      })
+    } catch (error) {
+      console.error("Error fetching user profile data:", error);
+    }
+  };
 
+  useEffect(() => {
+    fetchData();
     fetchBookingHistory();
   }, []);
 
@@ -68,8 +77,17 @@ const TutorProfile = () => {
     setTutorData({ ...tutorData, [name]: value });
   };
 
+  const updateTutorProfile = async (tutorData) => {
+    try {
+      const res = await axios.post("/profile/update/tutor", tutorData);
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error updating tutor profile:", error);
+    }
+  };
+
   const handleSave = () => {
-    console.log("Profile data saved:", tutorData);
+    updateTutorProfile(tutorData);
     setIsEditing(false);
     toast.success("Submission successful");
   };
@@ -173,19 +191,7 @@ const TutorProfile = () => {
             </label>
 
             <AnimatePresence>
-              {isEditing ? (
-                <motion.input
-                  type="text"
-                  name="subject"
-                  value={tutorData.subject}
-                  onChange={handleInputChange}
-                  className="form__input mt-1 w-full mx-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  key="subject-input"
-                />
-              ) : (
+              {
                 <motion.span
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -194,7 +200,7 @@ const TutorProfile = () => {
                 >
                   {tutorData.subject}
                 </motion.span>
-              )}
+              }
             </AnimatePresence>
           </div>
 
@@ -265,11 +271,10 @@ const TutorProfile = () => {
                   </td>
                   <td className="py-3 px-4">{record.hours}</td>
                   <td
-                    className={`py-3 px-4 ${
-                      record.status === "Present"
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
+                    className={`py-3 px-4 ${record.status === "Present"
+                      ? "text-green-600"
+                      : "text-red-600"
+                      }`}
                   >
                     {record.status}
                   </td>

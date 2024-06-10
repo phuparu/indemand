@@ -6,6 +6,7 @@ import { MdClass, MdEmail } from "react-icons/md";
 import { FaBirthdayCake } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "../../components/axiosCreds";
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,17 +20,26 @@ const UserProfile = () => {
   });
   const [bookingHistory, setBookingHistory] = useState([]);
 
-  useEffect(() => {
-    const user = users[0];
-    setProfileData({
-      username: user.username,
-      email: user.email,
-      gender: user.gender,
-      school: user.school || "",
-      grade: user.grade || "",
-      birthdate: user.birthdate,
-    });
+  const fetchData = async () => {
+    try {
+      await axios.get("/profile/get").then((res) => {
+        console.log(res.data);
+        setProfileData({
+          username: res.data.name,
+          email: res.data.email,
+          gender: res.data.gender || "",
+          school: res.data.school || "",
+          grade: res.data.grade_level || "",
+          birthdate: res.data.birthdate || "",
+        });
+      })
+    } catch (error) {
+      console.error("Error fetching user profile data:", error);
+    }
+  };
 
+  useEffect(() => {
+    fetchData();
     fetchBookingHistory();
   }, []);
 
@@ -57,7 +67,6 @@ const UserProfile = () => {
           endTime: "3:00 PM",
           status: "Upcoming",
         },
-        // Add more mock data as needed
       ];
       setBookingHistory(data);
     } catch (error) {
@@ -339,11 +348,10 @@ const UserProfile = () => {
                       <td className="py-3 px-4">{booking.startTime}</td>
                       <td className="py-3 px-4">{booking.endTime}</td>
                       <td
-                        className={`py-3 px-4 ${
-                          booking.status === "Upcoming"
-                            ? "text-yellow-600"
-                            : "text-green-600"
-                        }`}
+                        className={`py-3 px-4 ${booking.status === "Upcoming"
+                          ? "text-yellow-600"
+                          : "text-green-600"
+                          }`}
                       >
                         {booking.status}
                       </td>

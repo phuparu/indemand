@@ -5,6 +5,7 @@ import Timepicker from "../../components/time/Timepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import axios from "../../components/axiosCreds.js";
 
 const Booking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +16,7 @@ const Booking = () => {
   const [availability, setAvailability] = useState(true);
 
   const handleBookClick = (course) => {
-    setSelectedCourse(course);
+    setSelectedCourse(course.id);
     setIsModalOpen(true);
   };
 
@@ -40,25 +41,38 @@ const Booking = () => {
   };
 
   // dk what to implement
-  const checkAvailability = () => {
-    // Dummy function to simulate checking availability
-    // Replace with actual availability check logic
-    const isAvailable = Math.random() > 0.5;
-    setAvailability(isAvailable);
+  const checkAvailability = async () => {
+    try {
+      const body = {
+        course: selectedCourse,
+        date: selectedDate.toLocaleDateString(),
+        startTime: startTime.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        endTime: endTime.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      };
+      const response = await axios.post("/booking/availability", body)
+      if (response.data["available"]) {
+        return true
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error checking availability:", error);
+    }
+
   };
 
   const sendBookingData = async (bookingData) => {
     try {
-      const response = await fetch("/api/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Booking successful:", data);
+      const response = await axios.post("/booking/new", bookingData);
+      console.log(response.data);
+      if (response.data) {
+        console.log("Booking successful:", response.data);
         toast.success("Booking confirmed successfully!");
       } else {
         throw new Error("Failed to confirm booking");
@@ -69,9 +83,8 @@ const Booking = () => {
     }
   };
 
-  const handleConfirmBooking = () => {
-    checkAvailability();
-    if (availability) {
+  const handleConfirmBooking = async () => {
+    if (await checkAvailability()) {
       const duration = calculateDuration();
       const bookingData = {
         course: selectedCourse,
